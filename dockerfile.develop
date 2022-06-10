@@ -17,5 +17,7 @@ COPY . /usr/src/app
 
 RUN yarn build
 
+RUN yarn global add prisma
+
 EXPOSE 3000
 CMD [ "yarn", "dev" ]

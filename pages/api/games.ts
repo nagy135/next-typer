@@ -6,6 +6,11 @@ export default async function handler(
   _req: NextApiRequest,
   res: NextApiResponse<any>
 ) {
+  const games = getGames();
+  res.status(200).json(games);
+}
+
+export async function getGames() {
   const prisma = new PrismaClient();
   const games = await prisma.game.findMany({
     include: {
@@ -21,5 +26,5 @@ export default async function handler(
       },
     },
   });
-  res.status(200).json(games);
+  return games;
 }

@@ -15,9 +15,13 @@ RUN yarn install --production
 
 COPY . /usr/src/app
 
+RUN yarn add --dev typescript @types/react @types/node
+RUN yarn global add prisma
+
+RUN prisma generate
+
 RUN yarn build
 
-RUN yarn global add prisma
 
 EXPOSE 3000
 CMD [ "yarn", "dev" ]

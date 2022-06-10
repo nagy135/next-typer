@@ -23,7 +23,7 @@ const Games: NextPage<IGames> = ({ games }: IGames) => {
       <main>
         <ul>
           {games.map((e) => (
-            <li>
+            <li key={e.id}>
               <div>
                 <p>{e.title}</p>
                 <p>{e.text}</p>
@@ -39,13 +39,7 @@ export async function getServerSideProps() {
   const games = await getGames();
   return {
     props: {
-      games: games.map((e) => {
-        return {
-          ...e,
-          createdAt: e.createdAt.toString(),
-          updatedAt: e.updatedAt.toString(),
-        };
-      }),
+      games
     },
   };
 }

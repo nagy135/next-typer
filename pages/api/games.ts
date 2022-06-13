@@ -1,6 +1,6 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
-import { PrismaClient } from "@prisma/client";
+import { prisma } from "@services/internal";
 
 export default async function handler(
   _req: NextApiRequest,
@@ -11,7 +11,6 @@ export default async function handler(
 }
 
 export async function getGames() {
-  const prisma = new PrismaClient();
   const games = await prisma.game.findMany({
     include: {
       progresses: {

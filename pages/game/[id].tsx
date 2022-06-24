@@ -1,8 +1,6 @@
 import { Game } from "@prisma/client";
 import type { NextPage } from "next";
 import Head from "next/head";
-import styles from "../styles/Home.module.css";
-import { getGames } from "./api/games";
 import styled from "styled-components";
 import { useRouter } from "next/router";
 
@@ -10,14 +8,11 @@ interface IGames {
   games: Game[];
 }
 
-const Games: NextPage<IGames> = ({ games }: IGames) => {
+const GamePage: NextPage<IGames> = ({ games }: IGames) => {
   const router = useRouter();
-  const gameClickHandler = (e: any, id: number) => {
-    e.preventDefault();
-    router.push(`/game/${id}`);
-  };
+  console.log("================\n", "router: ", router.query.id, "\n================");
   return (
-    <div className={styles.container}>
+    <div>
       <Head>
         <link href="https://cdn.jsdelivr.net/npm/daisyui@2.17.0/dist/full.css" rel="stylesheet" type="text/css" />
         <script src="https://cdn.tailwindcss.com"></script>
@@ -31,26 +26,30 @@ const Games: NextPage<IGames> = ({ games }: IGames) => {
 
       <main>
         <div className="container mx-auto">
-          <div className="btn-group btn-group-vertical max-w-sm">
-            {games.map((g) => (
-              <button key={g.id} onClick={(e) => gameClickHandler(e, g.id)} className="btn m-3">{g.title}</button>
-            ))}
+          <div className="form-control max-w-md">
+            <label className="label">
+              <span className="label-text">Start game</span>
+            </label>
+            <label className="input-group input-group">
+              <span>Enter nickname</span>
+              <input type="text" placeholder="Player1" className="input input-bordered" />
+            </label>
           </div>
         </div>
       </main>
     </div>
   );
 };
-export async function getServerSideProps() {
-  const games = await getGames();
-  return {
-    props: {
-      games
-    },
-  };
-}
+// export async function getServerSideProps() {
+// const games = await getGames();
+// return {
+//   props: {
+//     games
+//   },
+// };
+// }
 
-export default styled(Games)`
+export default styled(GamePage)`
 button {
   margin: 10px !important;
 }

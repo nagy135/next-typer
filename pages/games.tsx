@@ -12,6 +12,8 @@ const Games: NextPage<IGames> = ({ games }: IGames) => {
   return (
     <div className={styles.container}>
       <Head>
+        <link href="https://cdn.jsdelivr.net/npm/daisyui@2.17.0/dist/full.css" rel="stylesheet" type="text/css" />
+        <script src="https://cdn.tailwindcss.com"></script>
         <title>Next-Typer</title>
         <meta
           name="description"
@@ -21,16 +23,11 @@ const Games: NextPage<IGames> = ({ games }: IGames) => {
       </Head>
 
       <main>
-        <ul>
+        <div className="btn-group btn-group-vertical">
           {games.map((e) => (
-            <li key={e.id}>
-              <div>
-                <p>{e.title}</p>
-                <p>{e.text}</p>
-              </div>
-            </li>
+            <button key={e.id} className="btn">{e.title}</button>
           ))}
-        </ul>
+        </div>
       </main>
     </div>
   );

@@ -1,11 +1,12 @@
 import Head from "next/head";
 import React from "react";
+import { GlobalContextProvider } from "./contexts/global";
 
 interface ILayout {
   children?: JSX.Element;
 };
 
-const Layout: React.FC<ILayout> = ({children}) => {
+const Layout: React.FC<ILayout> = ({ children }) => {
   return (
     <div>
       <Head>
@@ -19,9 +20,11 @@ const Layout: React.FC<ILayout> = ({children}) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main>
-        {children}
-      </main>
+      <GlobalContextProvider>
+        <main>
+          {children}
+        </main>
+      </GlobalContextProvider>
     </div>
   );
 }

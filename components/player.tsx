@@ -1,4 +1,3 @@
-import { ChangeEvent, useState } from "react";
 import { useGlobalContext } from "./contexts/global";
 
 const Player: React.FC = () => {
@@ -14,7 +13,7 @@ const Player: React.FC = () => {
           <span>Enter nickname</span>
           <input type="text" value={global.nickname} onChange={e => global.setNickname(e.target.value)} placeholder="Player1" className="input input-bordered" />
         </label>
-        <button className="btn btn-primary mt-2">Click here {global.nickname}</button>
+        <button className="btn btn-primary mt-2">Click here</button>
       </div>
     </div>
   );

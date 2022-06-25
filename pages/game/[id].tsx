@@ -1,3 +1,5 @@
+import { useGlobalContext } from "@components/contexts/global";
+import GameBoard from "@components/game-board";
 import Layout from "@components/layout";
 import Player from "@components/player";
 import { Game } from "@prisma/client";
@@ -12,15 +14,7 @@ const GamePage: NextPage<IGamePage> = ({ game }: IGamePage) => {
     <Layout>
       <>
         <Player />
-        <div className="hero mt-2 bg-base-200">
-          <div className="hero-content text-center">
-            <div className="max-w-md">
-              <h1 className="text-5xl font-bold">{game.title}</h1>
-              <p className="py-6">{game.text}</p>
-              <button className="btn btn-primary">Play</button>
-            </div>
-          </div>
-        </div>
+        <GameBoard game={game} />
       </>
     </Layout>
   );

@@ -1,4 +1,4 @@
-import { useGlobalContext } from "@components/contexts/global";
+import GameBody from "@components/game-body";
 import GameBoard from "@components/game-board";
 import Layout from "@components/layout";
 import Player from "@components/player";
@@ -15,6 +15,7 @@ const GamePage: NextPage<IGamePage> = ({ game }: IGamePage) => {
       <>
         <Player />
         <GameBoard game={game} />
+        <GameBody game={game} />
       </>
     </Layout>
   );

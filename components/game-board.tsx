@@ -4,6 +4,9 @@ import { useGlobalContext } from "./contexts/global";
 
 const GameBoard: React.FC<{ game: Game }> = ({ game }) => {
   const global = useGlobalContext();
+  const startGame = () => {
+    global.setPlaying(true);
+  }
   return (
     <div className="hero mt-2 bg-base-200">
       <div className="hero-content text-center">
@@ -14,6 +17,7 @@ const GameBoard: React.FC<{ game: Game }> = ({ game }) => {
             style={{
               opacity: global.nickname !== "" ? 1 : 0
             }}
+            onClick={startGame}
             className="btn btn-primary ml-2">
             Play{global.nickname !== "" ? ` (as ${global.nickname})` : ""}
           </StyledButton>

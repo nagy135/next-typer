@@ -1,6 +1,7 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
 import { prisma } from "@services/internal";
+import { generateText } from "@utils/common";
 
 type TPostGame = {
   title: string;
@@ -45,7 +46,7 @@ export async function generateGame(title: string): Promise<number> {
   const game = await prisma.game.create({
     data: {
       title,
-      text: "LOL",
+      text: generateText(10)
     },
   });
   return game.id;

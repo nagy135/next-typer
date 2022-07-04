@@ -6,7 +6,7 @@ export const generateText = (sentences: number): string => {
   for (let i = 0; i < sentences; i++) {
     result += " " + faker.hacker.phrase().replace(/!$/, ".");
   }
-  return result.trimEnd();
+  return result.trim();
 };
 
 /**

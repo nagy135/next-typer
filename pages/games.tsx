@@ -25,7 +25,7 @@ const Games: NextPage<IGames> = ({ games }: IGames) => {
               <button
                 key={g.id}
                 onClick={(e) => gameClickHandler(e, g.id)}
-                className="btn m-3"
+                className="btn btn-accent m-3"
               >
                 {g.title}
               </button>

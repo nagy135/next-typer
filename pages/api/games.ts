@@ -2,12 +2,25 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { prisma } from "@services/internal";
 
+type TPostGame = {
+  title: string;
+}
+
 export default async function handler(
-  _req: NextApiRequest,
+  req: NextApiRequest,
   res: NextApiResponse<any>
 ) {
-  const games = await getGames();
-  res.status(200).json(games);
+  switch (req.method) {
+    case "POST":
+      const data = req.body as TPostGame;
+      const gameId = await generateGame(data.title);
+      res.status(200).json({ id: gameId });
+      break;
+    default:
+      const games = await getGames();
+      res.status(200).json(games);
+      break;
+  }
 }
 
 export async function getGames() {
@@ -26,4 +39,14 @@ export async function getGames() {
     },
   });
   return games;
+}
+
+export async function generateGame(title: string): Promise<number> {
+  const game = await prisma.game.create({
+    data: {
+      title,
+      text: "LOL",
+    },
+  });
+  return game.id;
 }

@@ -1,10 +1,8 @@
-import { useGlobalContext } from "./contexts/global";
 import styled from "styled-components";
 import { useState } from "react";
 import { useRouter } from "next/router";
 
 const NewGame: React.FC = () => {
-  const global = useGlobalContext();
   const router = useRouter();
 
   const [gameName, setGameName] = useState("Testing game");
@@ -40,7 +38,7 @@ const NewGame: React.FC = () => {
             className="input input-bordered"
           />
         </label>
-        <button onClick={createNewGame} className="btn btn-xs w-40 mt-2 mb-2">
+        <button onClick={createNewGame} className="btn btn-xs w-40 my-2">
           Create
         </button>
       </div>

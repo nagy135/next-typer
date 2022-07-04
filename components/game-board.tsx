@@ -12,7 +12,7 @@ const GameBoard: React.FC<{ game: Game }> = ({ game }) => {
       <div className="hero-content text-center">
         <div className="max-w-md">
           <h1 className="text-5xl font-bold">{game.title}</h1>
-          <p className="py-6">{game.text}</p>
+          {global.playing ? null : <p className="py-6">{game.text}</p>}
           {global.playing ? null : (
             <StyledButton
               style={{
@@ -21,7 +21,10 @@ const GameBoard: React.FC<{ game: Game }> = ({ game }) => {
               onClick={startGame}
               className="btn btn-primary"
             >
-              Play{global.nickname !== "" && <span className="text-yellow-400">{` - as ${global.nickname}`}</span>}
+              Play
+              {global.nickname !== "" && (
+                <span className="text-yellow-400">{` - as ${global.nickname}`}</span>
+              )}
             </StyledButton>
           )}
         </div>

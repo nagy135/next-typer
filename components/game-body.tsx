@@ -28,7 +28,6 @@ const GameBody: React.FC<{ game: Game }> = ({ game }) => {
   };
 
   const progress = Math.round((writtenCount / game.text.length) * 100);
-  const progressStr = (): string => `${progress}%`;
 
   return global.playing ? (
     <div className="mt-2 bg-base-200 flex relative">
@@ -38,7 +37,7 @@ const GameBody: React.FC<{ game: Game }> = ({ game }) => {
           className="radial-progress"
           style={{ "--value": progress } as CSSProperties}
         >
-          {progressStr()}
+          {progress}%
         </div>
       </div>
       <button
@@ -56,6 +55,7 @@ const GameBody: React.FC<{ game: Game }> = ({ game }) => {
           handleTyping(e.key);
         }}
         contentEditable
+        suppressContentEditableWarning
       >
         <span className="text-green-400">{written}</span>{remaining}
       </div>

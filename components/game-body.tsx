@@ -8,6 +8,7 @@ const GameBody: React.FC<{ game: Game }> = ({ game }) => {
   const global = useGlobalContext();
 
   const [remaining, setRemaining] = useState(game.text);
+  const [written, setWritten] = useState("");
   const [writtenCount, setWrittenCount] = useState(0);
   const [wpm, setWpm] = useState(0);
   const [start, setStart] = useState<number | null>(null);
@@ -22,6 +23,7 @@ const GameBody: React.FC<{ game: Game }> = ({ game }) => {
 
       setWrittenCount((x) => x + 1);
       setRemaining((x) => x.slice(1));
+      setWritten((x) => x + e);
     }
   };
 
@@ -45,13 +47,18 @@ const GameBody: React.FC<{ game: Game }> = ({ game }) => {
       >
         <XCircleIcon className="h-10 w-10 text-red-500" />
       </button>
-      <textarea
-        autoFocus
+      <div
         className="textarea textarea-bordered text-center mx-auto w-1/2 my-2 h-96 hover:drop-shadow-lg"
         onChange={() => {}}
-        onKeyPress={(e) => handleTyping(e.key)}
-        value={remaining}
-      />
+        style={{caretColor: 'rgba(0,0,0,0)'}}
+        onKeyPress={(e) => {
+          e.preventDefault();
+          handleTyping(e.key);
+        }}
+        contentEditable
+      >
+        <span className="text-green-400">{written}</span>{remaining}
+      </div>
     </div>
   ) : null;
 };

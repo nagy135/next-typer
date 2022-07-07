@@ -21,11 +21,11 @@ const GameBoard: React.FC<{ game: Game }> = ({ game }) => {
                 opacity: global.nickname !== "" ? 1 : 0,
               }}
               onClick={startGame}
-              className="btn btn-primary"
+              className="btn btn-warning"
             >
               Play
               {global.nickname !== "" && (
-                <span className="text-yellow-400">{` - as ${global.nickname}`}</span>
+                <span className="text-red-600">{` - as ${global.nickname}`}</span>
               )}
             </StyledButton>
           )}

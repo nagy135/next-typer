@@ -18,3 +18,4 @@ export default async (userName: string): Promise<number> => {
     ).json()
   ).id;
 };
+

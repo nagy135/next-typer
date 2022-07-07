@@ -13,8 +13,10 @@ export default async function handler(
   switch (req.method) {
     case "POST":
       const data = req.body as TCreateUser;
+      const [userId, created] = await createUserIfNotExist(data.name);
       res.status(200).json({
-        created: await createUserIfNotExist(data.name),
+        created,
+        id: userId,
       });
       break;
     default:
@@ -30,19 +32,19 @@ export default async function handler(
  *
  * @author Viktor Nagy <viktor.nagy@01people.com>
  */
-async function createUserIfNotExist(name: string): Promise<boolean> {
+async function createUserIfNotExist(name: string): Promise<[number, boolean]> {
   const user = await prisma.user.findFirst({
     where: {
       name,
     },
   });
-  if (user) return false;
+  if (user) return [user.id, false];
 
-  await prisma.user.create({
+  const newUser = await prisma.user.create({
     data: {
       name,
       email: "test@test.com",
     },
   });
-  return true;
+  return [newUser.id, true];
 }

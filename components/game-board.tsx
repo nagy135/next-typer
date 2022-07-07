@@ -6,7 +6,8 @@ import Api from "services/internal/api";
 const GameBoard: React.FC<{ game: Game }> = ({ game }) => {
   const global = useGlobalContext();
   const startGame = async () => {
-    await Api.createNewUser(global.nickname);
+    const userId = await Api.createNewUser(global.nickname);
+    global.setUserId(userId);
     global.setPlaying(true);
   };
   return (

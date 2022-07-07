@@ -8,12 +8,13 @@ export default async (
   userId: number,
   progress: number
 ): Promise<void> => {
-  await fetch(`/api/game/${id}`, {
+  await fetch(`/api/progresses`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
+      gameId: id,
       userId,
       progress
     }),

@@ -4,6 +4,7 @@ import { useGlobalContext } from "./contexts/global";
 import Api from "services/internal/api";
 import { useEffect, useState } from "react";
 import { TPlayerProgress } from "@services/internal/api/get-game-progresses";
+import ProgressTable from "./progress-table";
 
 const GameBoard: React.FC<{ game: Game }> = ({ game }) => {
   const global = useGlobalContext();
@@ -31,13 +32,9 @@ const GameBoard: React.FC<{ game: Game }> = ({ game }) => {
         <div className="max-w-md">
           <h1 className="text-5xl font-bold">{game.title}</h1>
 
-          <ul>
-            {progresses.map((e) => (
-              <li>
-                {e.userName} - {e.progress}
-              </li>
-            ))}
-          </ul>
+          {progresses.length && !global.playing ? (
+            <ProgressTable progresses={progresses} />
+          ) : null}
           {global.playing ? null : (
             <StyledButton
               style={{

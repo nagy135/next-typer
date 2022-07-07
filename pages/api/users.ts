@@ -43,7 +43,6 @@ async function createUserIfNotExist(name: string): Promise<[number, boolean]> {
   const newUser = await prisma.user.create({
     data: {
       name,
-      email: "test@test.com",
     },
   });
   return [newUser.id, true];

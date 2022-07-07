@@ -35,7 +35,7 @@ export const MyGlobalContext =
 export const useGlobalContext = () => useContext(MyGlobalContext);
 
 export const GlobalContextProvider = ({ children }: MyGlobalProviderProps) => {
-  const [nickname, setNickname] = useState("feri");
+  const [nickname, setNickname] = useState("noooob");
   const [playing, setPlaying] = useState(false);
   const [userId, setUserId] = useState<number | null>(null);
   const [freshProgresses, setFreshProgresses] = useState(false);

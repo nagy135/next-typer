@@ -31,10 +31,11 @@ const GameBoard: React.FC<{ game: Game }> = ({ game }) => {
       <div className="hero-content text-center">
         <div className="max-w-md">
           <h1 className="text-5xl font-bold">{game.title}</h1>
-
+          <div className="my-4">
           {progresses.length && !global.playing ? (
             <ProgressTable progresses={progresses} />
           ) : null}
+          </div>
           {global.playing ? null : (
             <StyledButton
               style={{

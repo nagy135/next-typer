@@ -5,7 +5,7 @@ interface IProgressTable {
 }
 const ProgressTable: React.FC<IProgressTable> = ({ progresses }) => {
   return (
-    <div className="overflow-x-auto my-4">
+    <div className="overflow-x-auto">
       <table className="table w-full">
         <thead>
           <tr>

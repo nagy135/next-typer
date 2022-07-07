@@ -33,6 +33,7 @@ const GameBody: React.FC<{ game: Game }> = ({ game }) => {
           progress % UPDATE_EVERY_PERCENTAGE === 0
         ) {
           alreadyHitProgress.current = progress;
+          global.setFreshProgresses(false);
           Api.updateGameProgress(game.id, global.userId, progress);
         }
 

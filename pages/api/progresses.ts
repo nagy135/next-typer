@@ -7,17 +7,32 @@ type TCreateGameProgress = {
   userId: number;
   progress: number;
 };
+
+type TGetGameProgresses = {
+  gameId: number;
+};
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<any>
 ) {
   switch (req.method) {
     case "POST":
-      const data = req.body as TCreateGameProgress;
-      await createGameProgress(data);
+      const postData = req.body as TCreateGameProgress;
+      await createGameProgress(postData);
+      res.status(200).json({});
       break;
     default:
-      const progresses = await prisma.progress.findMany();
+      const getData = {
+        gameId: Number(req.query.gameId),
+      } as TGetGameProgresses;
+      const progresses = await prisma.progress.findMany({
+        where: { gameId: getData.gameId },
+        include: {
+          player: {
+            select: { name: true },
+          },
+        },
+      });
       res.status(200).json(progresses);
       break;
   }

@@ -1,26 +1,15 @@
 import styled from "styled-components";
 import { useState } from "react";
 import { useRouter } from "next/router";
+import Api from "@services/internal/api";
 
 const NewGame: React.FC = () => {
   const router = useRouter();
 
   const [gameName, setGameName] = useState("Testing game");
-  /**
-   *  calls api to generate new game, refreshes page
-   *
-   * @author Viktor Nagy <viktor.nagy@01people.com>
-   */
-  const createNewGame = async () => {
-    fetch("/api/games", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        title: gameName,
-      }),
-    }).then(() => router.reload());
+
+  const createNewGameHandler = async () => {
+    Api.createNewGame(gameName).then(() => router.reload());
   };
 
   return (
@@ -38,7 +27,7 @@ const NewGame: React.FC = () => {
             className="input input-bordered"
           />
         </label>
-        <button onClick={createNewGame} className="btn btn-xs w-40 my-2">
+        <button onClick={createNewGameHandler} className="btn btn-xs w-40 my-2">
           Create
         </button>
       </div>

@@ -1,8 +1,8 @@
 import { Game } from "@prisma/client";
 import { useGlobalContext } from "./contexts/global";
 import { XCircleIcon } from "@heroicons/react/solid";
-import { CSSProperties, useState } from "react";
-import { CPM_TO_WPM } from "@constants/common";
+import { CSSProperties, useMemo, useState } from "react";
+import { CPM_TO_WPM, UPDATE_EVERY_PERCENTAGE } from "@constants/common";
 
 const GameBody: React.FC<{ game: Game }> = ({ game }) => {
   const global = useGlobalContext();
@@ -21,13 +21,20 @@ const GameBody: React.FC<{ game: Game }> = ({ game }) => {
         setWpm(Math.round(writtenCount / CPM_TO_WPM / (elapsedSec / 60)));
       }
 
+      if ((writtenCount + 1) % UPDATE_EVERY_PERCENTAGE){
+
+      }
+
       setWrittenCount((x) => x + 1);
       setRemaining((x) => x.slice(1));
       setWritten((x) => x + e);
     }
   };
 
-  const progress = Math.round((writtenCount / game.text.length) * 100);
+  const progress = useMemo(
+    () => Math.round((writtenCount / game.text.length) * 100),
+    [writtenCount]
+  );
 
   return global.playing ? (
     <div className="mt-2 bg-base-200 flex relative">
@@ -49,7 +56,7 @@ const GameBody: React.FC<{ game: Game }> = ({ game }) => {
       <div
         className="textarea textarea-bordered text-center mx-auto w-1/2 my-2 h-96 hover:drop-shadow-lg"
         onChange={() => {}}
-        style={{caretColor: 'rgba(0,0,0,0)'}}
+        style={{ caretColor: "rgba(0,0,0,0)" }}
         onKeyPress={(e) => {
           e.preventDefault();
           handleTyping(e.key);
@@ -57,7 +64,8 @@ const GameBody: React.FC<{ game: Game }> = ({ game }) => {
         contentEditable
         suppressContentEditableWarning
       >
-        <span className="text-green-400">{written}</span>{remaining}
+        <span className="text-green-400">{written}</span>
+        {remaining}
       </div>
     </div>
   ) : null;

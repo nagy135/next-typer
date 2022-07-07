@@ -42,7 +42,7 @@ export async function getGames() {
   return games;
 }
 
-export async function generateGame(title: string): Promise<number> {
+async function generateGame(title: string): Promise<number> {
   const game = await prisma.game.create({
     data: {
       title,

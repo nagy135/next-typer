@@ -1,10 +1,12 @@
 import { Game } from "@prisma/client";
 import styled from "styled-components";
 import { useGlobalContext } from "./contexts/global";
+import Api from "services/internal/api";
 
 const GameBoard: React.FC<{ game: Game }> = ({ game }) => {
   const global = useGlobalContext();
-  const startGame = () => {
+  const startGame = async () => {
+    await Api.createNewUser(global.nickname);
     global.setPlaying(true);
   };
   return (

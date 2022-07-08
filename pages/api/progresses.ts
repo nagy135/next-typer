@@ -37,6 +37,7 @@ const getGameAllProgresses = async (
   return await prisma.progress.findMany({
     where: {
       gameId: data.gameId,
+      playerId: data.playerId,
     },
   });
 };
@@ -71,6 +72,7 @@ const getGameProgressStats = async (
       progress: e._max.progress ?? 0,
       wpm: e._max.wpm ?? 0,
       userName: playerIdNameMap[e.playerId],
+      userId: e.playerId,
     };
   });
   return result;

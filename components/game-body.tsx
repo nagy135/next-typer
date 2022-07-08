@@ -1,7 +1,7 @@
 import { Game } from "@prisma/client";
 import { useGlobalContext } from "./contexts/global";
 import { XCircleIcon } from "@heroicons/react/solid";
-import { CSSProperties, useMemo, useRef, useState } from "react";
+import React, { CSSProperties, useMemo, useRef, useState } from "react";
 import { CPM_TO_WPM, UPDATE_EVERY_PERCENTAGE } from "@constants/common";
 import Api from "services/internal/api";
 
@@ -25,18 +25,25 @@ const GameBody: React.FC<{ game: Game }> = ({ game }) => {
       if (!start) setStart(Date.now());
       else {
         const elapsedSec = (Date.now() - start) / 1000;
-        setWpm(Math.round(writtenCount / CPM_TO_WPM / (elapsedSec / 60)));
+        const currentWpm = Math.round(
+          writtenCount / CPM_TO_WPM / (elapsedSec / 60)
+        );
+        setWpm(currentWpm);
+        if (global.userId)
+          if (
+            progress > alreadyHitProgress.current &&
+            progress % UPDATE_EVERY_PERCENTAGE === 0
+          ) {
+            alreadyHitProgress.current = progress;
+            global.setFreshProgresses(false);
+            Api.updateGameProgress(
+              game.id,
+              global.userId,
+              progress,
+              currentWpm
+            );
+          }
       }
-      if (global.userId)
-        if (
-          progress > alreadyHitProgress.current &&
-          progress % UPDATE_EVERY_PERCENTAGE === 0
-        ) {
-          alreadyHitProgress.current = progress;
-          global.setFreshProgresses(false);
-          Api.updateGameProgress(game.id, global.userId, progress);
-        }
-
       setWrittenCount((x) => x + 1);
       setRemaining((x) => x.slice(1));
       setWritten((x) => x + e);

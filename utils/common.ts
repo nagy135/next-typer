@@ -49,11 +49,18 @@ export const parseRequestBooleansAndNumbers = (
   const result: Record<string, string | boolean | number> = {};
 
   for (const key in request) {
-    if (request[key] === 'true') result[key] = true;
-    else if (request[key] === 'false') result[key] = false;
+    if (request[key] === "true") result[key] = true;
+    else if (request[key] === "false") result[key] = false;
     else if (!isNaN(request[key])) result[key] = Number(request[key]);
     else result[key] = request[key];
   }
 
   return result;
 };
+
+/**
+ * returns whether rendering is SSR
+ *
+ * @author Viktor Nagy <viktor.nagy@01people.com>
+ */
+export const isServerSide = (): boolean => typeof window === "undefined";

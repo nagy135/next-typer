@@ -7,5 +7,6 @@ export type TCreateGameProgressRequest = {
 
 export type TGetGameProgressesRequest = {
   gameId: number;
-  all: boolean;
+  playerId?: number;
+  all?: boolean;
 };

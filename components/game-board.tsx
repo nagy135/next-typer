@@ -33,7 +33,7 @@ const GameBoard: React.FC<{ game: Game }> = ({ game }) => {
           <h1 className="text-5xl font-bold">{game.title}</h1>
           <div className="my-4">
           {progresses.length && !global.playing ? (
-            <ProgressTable progresses={progresses} />
+            <ProgressTable progresses={progresses} gameId={game.id} />
           ) : null}
           </div>
           {global.playing ? null : (

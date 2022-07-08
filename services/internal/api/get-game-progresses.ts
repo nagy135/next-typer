@@ -1,5 +1,6 @@
 export type TPlayerProgress = {
   progress: number;
+  wpm: number;
   userName: string;
 };
 /**
@@ -20,7 +21,8 @@ export default async (gameId: number): Promise<TPlayerProgress[]> => {
   ).map((e: any) => {
     return {
       progress: Number(e.progress),
-      userName: e.player.name,
+      userName: e.userName,
+      wpm: e.wpm,
     };
   });
 };

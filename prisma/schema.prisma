@@ -2,45 +2,46 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-client-js"
+    provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+    id        Int      @id @default(autoincrement())
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
 
-  name  String?
+    name String?
 
-  progresses Progress[]
+    progresses Progress[]
 }
 
 model Game {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+    id        Int      @id @default(autoincrement())
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
 
-  title String @db.VarChar(255)
-  text  String @db.Text()
+    title String @db.VarChar(255)
+    text  String @db.Text()
 
-  progresses Progress[]
+    progresses Progress[]
 }
 
 model Progress {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+    id        Int      @id @default(autoincrement())
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+    
+    progress Int @default(0)
+    wpm      Int @default(0)
 
-  progress Int @default(0)
+    player   User @relation(fields: [playerId], references: [id])
+    playerId Int
 
-  player   User @relation(fields: [playerId], references: [id])
-  playerId Int
-
-  game   Game @relation(fields: [gameId], references: [id])
-  gameId Int
+    game   Game @relation(fields: [gameId], references: [id])
+    gameId Int
 }

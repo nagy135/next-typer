@@ -37,3 +37,23 @@ export function* range(...args: number[]) {
   }
   return iterationCount;
 }
+
+/**
+ * Parses request transforming bool-strings to actual booleans (also numbers)
+ *
+ * @author Viktor Nagy <viktor.nagy@01people.com>
+ */
+export const parseRequestBooleansAndNumbers = (
+  request: Record<string, any>
+): Record<string, string | boolean | number> => {
+  const result: Record<string, string | boolean | number> = {};
+
+  for (const key in request) {
+    if (request[key] === 'true') result[key] = true;
+    else if (request[key] === 'false') result[key] = false;
+    else if (!isNaN(request[key])) result[key] = Number(request[key]);
+    else result[key] = request[key];
+  }
+
+  return result;
+};

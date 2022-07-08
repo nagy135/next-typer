@@ -11,6 +11,7 @@ const ProgressTable: React.FC<IProgressTable> = ({ progresses }) => {
           <tr>
             <th>Name</th>
             <th>Progress</th>
+            <th>Wpm</th>
           </tr>
         </thead>
         <tbody>
@@ -18,6 +19,7 @@ const ProgressTable: React.FC<IProgressTable> = ({ progresses }) => {
             <tr key={`progressRecord_${i}`}>
               <td>{e.userName}</td>
               <td>{e.progress}</td>
+              <td>{e.wpm}</td>
             </tr>
           ))}
         </tbody>

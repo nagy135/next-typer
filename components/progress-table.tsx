@@ -28,7 +28,7 @@ const ProgressTable: React.FC<IProgressTable> = ({ progresses, gameId }) => {
         <thead>
           <tr>
             <th>Name</th>
-            <th>Progress (max)</th>
+            <th>Progress</th>
             <th>Wpm (max)</th>
             <th>graph</th>
           </tr>

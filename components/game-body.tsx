@@ -71,7 +71,7 @@ const GameBody: React.FC<{ game: Game }> = ({ game }) => {
         className="textarea textarea-bordered text-center mx-auto w-1/2 my-2 h-96 hover:drop-shadow-lg"
         onChange={() => {}}
         style={{ caretColor: "rgba(0,0,0,0)" }}
-        onKeyPress={(e) => {
+        onKeyDown={(e) => {
           e.preventDefault();
           handleTyping(e.key);
         }}

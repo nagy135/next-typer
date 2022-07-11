@@ -12,8 +12,9 @@ const GameBody: React.FC<{ game: Game }> = ({ game }) => {
   const [written, setWritten] = useState("");
   const [writtenCount, setWrittenCount] = useState(0);
   const [wpm, setWpm] = useState(0);
-  const [start, setStart] = useState<number | null>(null);
   const alreadyHitProgress = useRef<number>(0);
+  const currentPartStart = useRef<number | null>(null);
+  const currentDiscardedChars = useRef<number>(0); // how many chars are not counted in current WPM (only consider last UPDATE_EVERY_PERCENTAGE piece)
 
   const progress = useMemo(
     () => Math.round((writtenCount / game.text.length) * 100),
@@ -22,18 +23,24 @@ const GameBody: React.FC<{ game: Game }> = ({ game }) => {
 
   const handleTyping = async (e: string) => {
     if (game.text[writtenCount] === e) {
-      if (!start) setStart(Date.now());
+      if (!currentPartStart.current) currentPartStart.current = Date.now();
       else {
-        const elapsedSec = (Date.now() - start) / 1000;
-        const currentWpm = Math.round(
-          writtenCount / CPM_TO_WPM / (elapsedSec / 60)
+        const now = Date.now();
+        const elapsedSec = Math.round((now - currentPartStart.current) / 1000);
+        let currentWpm = Math.round(
+          (writtenCount - currentDiscardedChars.current) /
+            CPM_TO_WPM /
+            (elapsedSec / 60)
         );
+        if (currentWpm === Infinity) currentWpm = 0;
         setWpm(currentWpm);
         if (global.userId)
           if (
             progress > alreadyHitProgress.current &&
             progress % UPDATE_EVERY_PERCENTAGE === 0
           ) {
+            currentDiscardedChars.current = writtenCount;
+            currentPartStart.current = now;
             alreadyHitProgress.current = progress;
             global.setFreshProgresses(false);
             Api.updateGameProgress(
